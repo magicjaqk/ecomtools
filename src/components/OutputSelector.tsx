@@ -46,7 +46,7 @@ const OutputSelector = (props: Props) => {
         e.preventDefault();
         handleSubmit();
       }}
-      className="rounded-lg shadow-md shadow-slate-400/50 border border-slate-300/50 p-10 w-full space-y-4 relative"
+      className="rounded-lg shadow-md shadow-slate-400/50 border border-slate-300/50 p-10 w-full space-y-4 relative w-full"
     >
       <p className="text-lg text-slate-800 font-medium">
         Select the fields you would like to export below:

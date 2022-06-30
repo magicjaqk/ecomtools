@@ -80,7 +80,7 @@ const UploadBox = (props: Props) => {
           setTimeout(() => setError(false), 5000);
         }
       }}
-      className="rounded-lg shadow-md shadow-slate-400/50 border border-slate-300/50 p-10 flex flex-col items-center justify-center space-y-6"
+      className="rounded-lg shadow-md shadow-slate-400/50 border border-slate-300/50 p-10 flex flex-col items-center justify-center space-y-6 w-full"
     >
       <p className="text-slate-600">
         Upload the file in CSV format that you would like to be formatted.

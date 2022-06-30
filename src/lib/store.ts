@@ -22,7 +22,7 @@ export const useStore = create<storeType>()((set, get) => ({
       Papa.parse(inputFile, {
         header: true,
         complete: (results) => {
-          console.log("Parsed File: ", results.data);
+          // console.log("Parsed File: ", results.data);
           set({ outputFile: results.data });
         },
       });
@@ -33,7 +33,7 @@ export const useStore = create<storeType>()((set, get) => ({
 
     const newJSON: any[] = get().outputFile!.map((item) => {
       let newObj: any = {};
-      for (let i = 0; i < fields.length - 1; i++) {
+      for (let i = 0; i < fields.length; i++) {
         const field = fields[i];
         if (field === undefined) return;
 
@@ -42,6 +42,7 @@ export const useStore = create<storeType>()((set, get) => ({
       }
       return newObj;
     });
+    // console.log(newJSON);
 
     const newCSV = Papa.unparse(newJSON.slice(0, -1), {
       header: true,
