@@ -5,6 +5,7 @@ type storeType = {
   currentFile: File | undefined;
   setCurrentFile: (newFile: File | undefined) => void;
   outputFile: any[] | undefined;
+  resetOutputFile: () => void;
   parseFile: () => void;
   createCSV: (fields: string[]) => void;
 };
@@ -13,6 +14,7 @@ export const useStore = create<storeType>()((set, get) => ({
   currentFile: undefined,
   setCurrentFile: (newFile: File | undefined) => set({ currentFile: newFile }),
   outputFile: undefined,
+  resetOutputFile: () => set({ outputFile: undefined, currentFile: undefined }),
   parseFile: async () => {
     const inputFile = get().currentFile;
 

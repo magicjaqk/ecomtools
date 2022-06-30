@@ -33,7 +33,7 @@ const UploadBox = (props: Props) => {
       scale: 1,
       opacity: 1,
     },
-    delay: 400,
+    delay: 300,
     config: config.default,
   });
 
@@ -61,6 +61,10 @@ const UploadBox = (props: Props) => {
     },
     config: config.default,
   });
+
+  React.useEffect(() => {
+    setFile(undefined);
+  }, [setFile]);
 
   return (
     <a.form

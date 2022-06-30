@@ -1,6 +1,7 @@
 import { useSpring, a, useTransition } from "@react-spring/web";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import OutputSelector from "../components/OutputSelector";
 import UploadBox from "../components/UploadBox";
 import { useStore } from "../lib/store";
@@ -17,7 +18,6 @@ const Home: NextPage = () => {
     to: {
       opacity: 1,
     },
-    delay: 400,
   });
 
   const componentTransition = useTransition(outputFileDefined, {
@@ -49,22 +49,34 @@ const Home: NextPage = () => {
       </Head>
       <a.div
         style={pageTransition}
-        className="flex flex-col items-center justify-center min-h-screen mx-auto py-10 px-4 space-y-10 relative"
+        className="flex flex-col items-center justify-center min-h-screen mx-auto py-10 px-4 space-y-5 md:space-y-8 relative"
       >
-        <h1 className="font-bold text-4xl md:text-6xl text-center">
-          EcomTools
-        </h1>
-        {componentTransition((style, state) =>
-          !state ? (
-            <a.div style={style} className={"max-w-md"}>
-              <UploadBox />
-            </a.div>
-          ) : (
-            <a.div style={style} className="max-w-lg">
-              <OutputSelector />
-            </a.div>
-          )
-        )}
+        <div className="flex items-center justify-center">
+          <div className="relative w-48 h-20 mb-3 -mr-1 -z-10">
+            <Image
+              src="/EcomParcelLogo.png"
+              alt="EcomParcel"
+              layout="fill"
+              objectFit="contain"
+            />
+          </div>
+          <h1 className="font-light text-6xl md:text-6xl text-center text-gray-800/85">
+            Tools
+          </h1>
+        </div>
+        <div className="relative h-72">
+          {componentTransition((style, state) =>
+            !state ? (
+              <a.div style={style} className={"max-w-md"}>
+                <UploadBox />
+              </a.div>
+            ) : (
+              <a.div style={style} className="max-w-lg">
+                <OutputSelector />
+              </a.div>
+            )
+          )}
+        </div>
       </a.div>
     </>
   );
