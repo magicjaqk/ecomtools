@@ -37,8 +37,9 @@ export const useStore = create<storeType>()((set, get) => ({
         const field = fields[i];
         if (field === undefined) return;
 
-        newObj[field] =
-          field === "trackingNumber" ? `="${item[field]}"` : item[field];
+        // Swap this line for the following line to format tracking numbers as strings in excel.
+        // newObj[field] = field === "trackingNumber" ? `="${item[field]}"` : item[field];
+        newObj[field] = item[field];
       }
       return newObj;
     });
