@@ -1,14 +1,49 @@
 import Papa from "papaparse";
 
+function orderPrioritizedFields(fields: string[]) {
+  const arrayPrioritizedOrder = [
+    "trackingNumber",
+    "orderGroup",
+    "poNumber",
+    "toCity",
+    "toStreet1",
+    "toCompany",
+    "toZip",
+    "toName",
+    "toState",
+    "shipperReference",
+    "contentDescription",
+  ];
+  let orderedArray: string[] = [];
+
+  // Append prioritized fields first in the ordered array
+  for (let i = 0; i < arrayPrioritizedOrder.length; i++) {
+    const field = arrayPrioritizedOrder[i] as string;
+    if (fields.includes(field)) {
+      orderedArray.push(field);
+    }
+  }
+
+  // Append the rest of the fields that aren't prioritized
+  orderedArray = [
+    ...orderedArray,
+    ...fields.filter((value) => !arrayPrioritizedOrder.includes(value)),
+  ];
+
+  return orderedArray;
+}
+
 export default function createCSV(
   fields: string[],
   outputFile: any[],
   currentFileName: string
 ) {
+  const orderedFields = orderPrioritizedFields(fields);
+
   const newJSON: any[] = outputFile!.map((item) => {
     let newObj: any = {};
-    for (let i = 0; i < fields.length; i++) {
-      const field = fields[i];
+    for (let i = 0; i < orderedFields.length; i++) {
+      const field = orderedFields[i];
       if (field === undefined) return;
 
       // Swap this line for the following line to format tracking numbers as strings in excel.
