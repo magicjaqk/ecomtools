@@ -1,5 +1,6 @@
 import create from "zustand";
-import Papa from "papaparse";
+import createCSV from "./createCSV";
+import parseCSV from "./parseCSV";
 
 type storeType = {
   currentFile: File | undefined;
@@ -19,43 +20,15 @@ export const useStore = create<storeType>()((set, get) => ({
     const inputFile = get().currentFile;
 
     if (inputFile) {
-      Papa.parse(inputFile, {
-        header: true,
-        complete: (results) => {
-          // console.log("Parsed File: ", results.data);
-          set({ outputFile: results.data });
-        },
-      });
+      parseCSV(inputFile);
     }
   },
   createCSV: (fields: string[]) => {
-    if (get().outputFile === undefined) return;
+    const outputFile = get().outputFile;
+    const currentFile = get().currentFile;
+    if (outputFile === undefined || currentFile === undefined) return;
 
-    const newJSON: any[] = get().outputFile!.map((item) => {
-      let newObj: any = {};
-      for (let i = 0; i < fields.length; i++) {
-        const field = fields[i];
-        if (field === undefined) return;
-
-        // Swap this line for the following line to format tracking numbers as strings in excel.
-        // newObj[field] = field === "trackingNumber" ? `="${item[field]}"` : item[field];
-        newObj[field] = item[field];
-      }
-      return newObj;
-    });
-    // console.log(newJSON);
-
-    const newCSV = Papa.unparse(newJSON.slice(0, -1), {
-      header: true,
-    });
-
-    // Create blob for data download
-    const blob = new Blob([newCSV], { type: "text/csv" });
-
-    const anchor = document.createElement("a");
-    anchor.download = `formatted_${get().currentFile!.name.slice(0, -4)}.csv`;
-    anchor.href = window.URL.createObjectURL(blob);
-    anchor.click();
+    createCSV(fields, outputFile, currentFile.name);
 
     set({ outputFile: undefined, currentFile: undefined });
   },
