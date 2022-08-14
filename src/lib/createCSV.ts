@@ -2,16 +2,27 @@ import Papa from "papaparse";
 
 function orderPrioritizedFields(fields: string[]) {
   const arrayPrioritizedOrder = [
+    // Column A
     "trackingNumber",
+    // Column B
     "orderGroup",
+    // Column C
     "poNumber",
-    "toCity",
-    "toStreet1",
-    "toCompany",
-    "toZip",
+    // Column D
     "toName",
+    // Column E
+    "toStreet1",
+    // Column F
+    "toCompany",
+    // Column G
+    "toZip",
+    // Column H
+    "toCity",
+    // Column I
     "toState",
+    // Column J
     "shipperReference",
+    // Column K
     "contentDescription",
   ];
   let orderedArray: string[] = [];
@@ -50,12 +61,13 @@ export default function createCSV(
       // newObj[field] = field === "trackingNumber" ? `="${item[field]}"` : item[field];
       newObj[field] = item[field];
     }
+
     return newObj;
   });
   // console.log(newJSON);
 
   const newCSV = Papa.unparse(newJSON.slice(0, -1), {
-    header: true,
+    header: false,
   });
 
   // Create blob for data download
